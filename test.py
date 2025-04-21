@@ -27,7 +27,7 @@ max_len = 32
 tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
 encodings = tokenizer(texts, max_length=max_len, padding='max_length', truncation=True, return_tensors='tf')
 
-# 3. Model definition (BERT + CNN + BiLSTM)
+# 3. Model(BERT + CNN + BiLSTM)
 bert_model = TFBertModel.from_pretrained('bert-base-uncased')
 input_ids = tf.keras.Input(shape=(max_len,), dtype=tf.int32, name='input_ids')
 attention_mask = tf.keras.Input(shape=(max_len,), dtype=tf.int32, name='attention_mask')
@@ -45,7 +45,7 @@ model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=3e-5),
               loss='binary_crossentropy',
               metrics=['accuracy'])
 
-# 4. Training (use all data for demonstration; in practice, use train/test split)
+# 4. Training model with all the data
 labels_tensor = tf.constant(labels, dtype=tf.float32)
 model.fit(
     {'input_ids': encodings['input_ids'], 'attention_mask': encodings['attention_mask']},
